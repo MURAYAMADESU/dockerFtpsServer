@@ -1,0 +1,63 @@
+VSFTPD(8) BSD システムマネージャのマニュアル VSFTPD(8)
+
+名前
+     vsftpd - 非常に安全な FTP デーモン
+
+SYNOPSIS
+     vsftpd [設定ファイルおよび/またはオプション].
+
+説明
+     vsftpd は Very Secure File Transfer Protocol デーモンである。サーバは、inetd(8) や xinetd(8) のような "スーパーサーバ" から起動することができる。 あるいは
+     この場合、vsftpd 自身がネットワーク上でリッスンする。後者のモードは使いやすく
+     推奨される。このモードを有効にするには、/etc/vsftpd/vsftpd.confでlisten=YESを設定する。 vsftpdバイナリを直接実行すると、FTPサーバーが起動する。
+     バイスが起動し、すぐにクライアントに接続できるようになる。
+
+     Systemdはvsftpdデーモンの起動を変更する。vsftpdパッケージには、/var/run/systemd/genera-tor/vsftpd.confへのシンボリックリンクを生成するvsftpd-generatorスクリプトが含まれている。
+     tor/vsftpd.target.wantsディレクトリへのシンボリックリンクを生成するvsftpd-generatorスクリプトが含まれています。このジェネレーターは、たとえば「systemctl --system daemon-reload」中に呼び出されます。これらのシンボリックリンクはすべて
+     /usr/lib/systemd/system/vsftpd@.service ファイルにリンクします。 vsftpdデーモンは、以下のいずれかの方法で制御される：
+
+     1. デフォルトの /etc/vsftpd/vsftpd.conf 構成ファイルを使用する単一デーモン。
+     # systemctl {start,stop,...} vsftpd[.service] を使用します。
+
+     2. /etc/vsftpd/<conf-name>.conf を使用する単一デーモン。
+     # systemctl {start,stop,...}vsftpd@<conf-name>[.service]を使用します。
+
+     3. すべてのインスタンスをまとめる
+     # systemctl {restart,stop} vsftpd.target
+
+     詳細は systemd.unit(5), systemd.target(5) を参照。
+
+オプション
+     オプションの設定ファイルをコマンドラインで指定することができます。これらのファイルは、root で実行する場合は root で所有する必要があります。コマンドライン
+     オプションは、ロードされる設定ファイルとして扱われます。コンフィグファイルは、コマンドラインで指定された順番にロードされる。
+     の順にロードされることに注意。 構成ファイルが指定されない場合、/etc/vsftpd/vsftpd.conf の既定の構成ファイルが、他のすべてのコマン ドラインオプションの後に読み込まれます。
+     の既定構成ファイルが読み込まれます。
+
+     対応するオプションは次のとおりです：
+
+     -v 他のオプションが指定されていても、バージョン情報を表示して終了します。
+
+     -ooption=value
+             設定ファイルのフォーマットに従って、オプションと値のペアを1つ設定する。複数の-oオプションがサポートされ、それらはコマンドライン上に現れた順に適用される。
+             オプションは、設定ファイルの読み込みを含め、コマンドラインに現れた順番に適用される。
+
+例
+     vsftpd -olisten=NO /etc/vsftpd/vsftpd.conf -oftpd_banner=blah
+
+     この例は、vsftpd内蔵のデフォルトの「listen」オプションをNOに上書きしますが、その設定を上書きする可能性のある/etc/vsftpd/vsftpd.confをロードします。
+     をロードする。最後に、「ftpd_banner」設定を「blah」に設定する。
+     設定ファイルにあった同じ設定を上書きする。
+
+ファイル
+     /etc/vsftpd/vsftpd.conf
+
+     /usr/lib/systemd/system/vsftpd.service
+
+     /usr/lib/systemd/system/vsftpd@.service
+
+     /usr/lib/systemd/system/vsftpd.target
+
+参照
+     vsftpd.conf(5) systemd.unit(5)
+
+                                                                       2001年 3月 8日

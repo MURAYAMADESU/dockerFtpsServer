@@ -1,3 +1,3 @@
 #!/usr/bin/bash
-/usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
-tarl -f /div/null
+/usr/sbin/vsftpd /sysconf/yum.conf
+tail -f /dev/null
