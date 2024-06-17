@@ -3,4 +3,4 @@
 ###本ファイルのトップディレクトリーにworkspaceファイルを作成してください。FTPサーバーにアップロードされたファイルは全てworkspaceファイルに保存されます。
 ###SSLで通信をするため証明書はsysconfファイルにvsftpd.pemで保存してください。
 ###FPTログイン:
-###id:ftpuser pass:muradayoo
+###id:ftpuser pass:muradesuyoo
